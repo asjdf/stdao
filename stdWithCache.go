@@ -1,19 +1,17 @@
 package stdao
 
 import (
-	"github.com/Pacific73/gorm-cache/cache"
-	"github.com/Pacific73/gorm-cache/config"
+	"github.com/asjdf/gorm-cache/cache"
+	"github.com/asjdf/gorm-cache/config"
 	"gorm.io/gorm"
 )
 
 func CreateWithCache[T any](m T) StdWithCache[T] {
-	return StdWithCache[T]{model: m}
+	return StdWithCache[T]{Std: Std[T]{model: m}}
 }
 
 type StdWithCache[T any] struct {
-	// Std is a standard struct for all dao structs
-	db    *gorm.DB
-	model T
+	Std[T]
 }
 
 func (s *StdWithCache[T]) Init(db *gorm.DB, cacheConfig *config.CacheConfig) error {
