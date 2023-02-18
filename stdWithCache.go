@@ -14,9 +14,12 @@ type StdWithCache[T any] struct {
 	Std[T]
 }
 
-func (s *StdWithCache[T]) Init(db *gorm.DB, cacheConfig *config.CacheConfig) error {
-	s.db = db
-	err := s.db.AutoMigrate(s.model)
+func (s *StdWithCache[T]) Init(db *gorm.DB, cacheConfig *config.CacheConfig) (err error) {
+	s.db, err = forkDB(db)
+	if err != nil {
+		return err
+	}
+	err = s.db.AutoMigrate(s.model)
 	if err != nil {
 		return err
 	}

@@ -16,8 +16,8 @@ type Std[T any] struct {
 	model T
 }
 
-func (s *Std[T]) Init(db *gorm.DB) error {
-	s.db = db
+func (s *Std[T]) Init(db *gorm.DB) (err error) {
+	s.db, err = forkDB(db)
 	return s.db.AutoMigrate(s.model)
 }
 
@@ -65,7 +65,7 @@ func (s *Std[T]) Find(model T, tx ...*gorm.DB) (result *gorm.DB) {
 	if len(tx) > 0 {
 		return tx[0].Where(model).Find(model)
 	}
-	return s.db.Where(model).Find(model)
+	return s.db.Find(model)
 }
 
 func (s *Std[T]) List(where []clause.Expression, order []clause.OrderByColumn, page page.Paginate, tx ...*gorm.DB) (list []T, result *gorm.DB) {
