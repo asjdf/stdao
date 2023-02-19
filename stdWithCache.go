@@ -27,7 +27,7 @@ func (s *StdWithCache[T]) Init(db *gorm.DB, cacheConfig *config.CacheConfig) (er
 	if err != nil {
 		return err
 	}
-	err = s.db.Use(c)
+	err = s.Use(c)
 	if err != nil {
 		return err
 	}

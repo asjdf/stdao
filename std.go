@@ -21,6 +21,10 @@ func (s *Std[T]) Init(db *gorm.DB) (err error) {
 	return s.db.AutoMigrate(s.model)
 }
 
+func (s *Std[T]) Use(plugin gorm.Plugin) (err error) {
+	return s.db.Use(plugin)
+}
+
 // Create the model to the database.
 func (s *Std[T]) Create(model T, tx ...*gorm.DB) (result *gorm.DB) {
 	if len(tx) > 0 {
