@@ -64,6 +64,14 @@ func (s *Std[T]) Delete(model T, tx ...*gorm.DB) (result *gorm.DB) {
 	return s.db.Delete(model)
 }
 
+// First the model from the database.
+func (s *Std[T]) First(model T, tx ...*gorm.DB) (result *gorm.DB) {
+	if len(tx) > 0 {
+		return tx[0].First(model)
+	}
+	return s.db.First(model)
+}
+
 // Find the model from the database.
 func (s *Std[T]) Find(model T, tx ...*gorm.DB) (result *gorm.DB) {
 	if len(tx) > 0 {

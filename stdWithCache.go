@@ -12,6 +12,7 @@ func CreateWithCache[T any](m T) StdWithCache[T] {
 
 type StdWithCache[T any] struct {
 	Std[T]
+	cache.StatsAccessor
 }
 
 func (s *StdWithCache[T]) Init(db *gorm.DB, cacheConfig *config.CacheConfig) (err error) {
@@ -27,6 +28,7 @@ func (s *StdWithCache[T]) Init(db *gorm.DB, cacheConfig *config.CacheConfig) (er
 	if err != nil {
 		return err
 	}
+	s.StatsAccessor = c
 	err = s.Use(c)
 	if err != nil {
 		return err
