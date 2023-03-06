@@ -11,7 +11,7 @@ func Create[T any](m T) *Std[T] {
 	return &Std[T]{model: m}
 }
 
-func(s *Std[T]) WithMigrator(mf func(db *gorm.DB) error) {
+func (s *Std[T]) WithMigrator(mf func(db *gorm.DB) error) {
 	s.migrator = mf
 }
 
@@ -155,6 +155,4 @@ func (s *Std[T]) Count() (count int64) {
 func (s *Std[T]) DB() *gorm.DB {
 	// protect the db in origin dao
 	return s.db.Session(&gorm.Session{})
-}
-
 }
