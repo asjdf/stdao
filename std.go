@@ -117,7 +117,7 @@ func (s *Std[T]) Delete(model T, tx ...*gorm.DB) (result *gorm.DB) {
 	if len(tx) > 0 {
 		return tx[0].Delete(model)
 	}
-	return s.db.Delete(model)
+	return s.db.Delete(model, model)
 }
 
 // First the model from the database.
@@ -125,7 +125,7 @@ func (s *Std[T]) First(model T, tx ...*gorm.DB) (result *gorm.DB) {
 	if len(tx) > 0 {
 		return tx[0].First(model)
 	}
-	return s.db.First(model)
+	return s.db.First(model, model)
 }
 
 // Find the model from the database.
@@ -133,7 +133,7 @@ func (s *Std[T]) Find(model T, tx ...*gorm.DB) (result *gorm.DB) {
 	if len(tx) > 0 {
 		return tx[0].Where(model).Find(model)
 	}
-	return s.db.Find(model)
+	return s.db.Find(model, model)
 }
 
 func (s *Std[T]) List(where []clause.Expression, order []clause.OrderByColumn, page page.Paginate, tx ...*gorm.DB) (list []T, result *gorm.DB) {
