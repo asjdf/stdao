@@ -142,7 +142,7 @@ func (s *Std[T]) List(where []clause.Expression, order []clause.OrderByColumn, p
 	if len(tx) > 0 {
 		db = tx[0]
 	}
-	result = db.Clauses(clause.Where{Exprs: where}, clause.OrderBy{Columns: order}).Scopes(page.Paginate()).Find(list)
+	result = db.Clauses(clause.Where{Exprs: where}, clause.OrderBy{Columns: order}).Scopes(page.Paginate()).Find(&list)
 	return
 }
 
