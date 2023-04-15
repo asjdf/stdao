@@ -11,7 +11,7 @@ func (p *Paginate) Paginate() func(db *gorm.DB) *gorm.DB {
 	page := p.Current
 	limit := p.PageSize
 	return func(db *gorm.DB) *gorm.DB {
-		if page == 0 {
+		if page <= 0 {
 			page = 1
 		}
 		switch {
