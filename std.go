@@ -156,3 +156,10 @@ func (s *Std[T]) DB() *gorm.DB {
 	// protect the db in origin dao
 	return s.db.Session(&gorm.Session{})
 }
+
+// Pluck queries a single column from a model, returning in the slice dest. E.g.:
+// var ages []int64
+// db.Model(&users).Pluck("age", &ages)
+func (s *Std[T]) Pluck(column string, dest interface{}) *gorm.DB {
+	return s.db.Pluck(column, dest)
+}

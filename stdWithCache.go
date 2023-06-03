@@ -35,3 +35,12 @@ func (s *StdWithCache[T]) Init(db *gorm.DB, cacheConfig *config.CacheConfig) (er
 	}
 	return nil
 }
+
+// Pluck queries a single column from a model, returning in the slice dest. E.g.:
+// var ages []int64
+// db.Model(&users).Pluck("age", &ages)
+func (s *StdWithCache[T]) Pluck(column string, dest interface{}) *gorm.DB {
+	// since cache not support pluck (because it can't get primary key from query resp)
+	// so we have to use struct slice instead of int/string slice.
+
+}
