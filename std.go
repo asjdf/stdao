@@ -120,6 +120,15 @@ func (s *Std[T]) Delete(model T, tx ...*gorm.DB) (result *gorm.DB) {
 	return s.db.Delete(model, model)
 }
 
+func (s *Std[T]) Where(query any, args ...any) (result *gorm.DB) {
+	s.db = s.db.Where(query, args...)
+	return s.db
+}
+
+func (s *Std[T]) WhereByPredicateModel(predicateModel T) (result *gorm.DB) {
+	return s.Where(predicateModel)
+}
+
 // First the model from the database.
 func (s *Std[T]) First(model T, tx ...*gorm.DB) (result *gorm.DB) {
 	if len(tx) > 0 {
@@ -155,4 +164,11 @@ func (s *Std[T]) Count() (count int64) {
 func (s *Std[T]) DB() *gorm.DB {
 	// protect the db in origin dao
 	return s.db.Session(&gorm.Session{})
+}
+
+// Pluck queries a single column from a model, returning in the slice dest. E.g.:
+// var ages []int64
+// db.Model(&users).Pluck("age", &ages)
+func (s *Std[T]) Pluck(column string, dest interface{}) *gorm.DB {
+	return s.db.Pluck(column, dest)
 }
