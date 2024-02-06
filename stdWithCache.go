@@ -42,5 +42,6 @@ func (s *StdWithCache[T]) Init(db *gorm.DB, cacheConfig *config.CacheConfig) (er
 func (s *StdWithCache[T]) Pluck(column string, dest interface{}) *gorm.DB {
 	// since cache not support pluck (because it can't get primary key from query resp)
 	// so we have to use struct slice instead of int/string slice.
-
+	//FIXME: cache support pluck
+	return s.db.Pluck(column, dest)
 }
